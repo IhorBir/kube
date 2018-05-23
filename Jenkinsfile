@@ -1,4 +1,4 @@
-1node {
+node {
     
     stage('git clone') {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/spring-projects/spring-boot.git']]])
@@ -21,9 +21,7 @@
     
     stage('Build to container') {
         dir('spring-boot-samples/spring-boot-sample-actuator') {
-            dir('docker') {
-                git changelog: false, poll: false, url: 'https://github.com/IhorBir/kube.git'
-            }
+            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'IgnoreNotifyCommit'], [$class: 'RelativeTargetDirectory', relativeTargetDir: 'docker']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/IhorBir/kube.git']]]
             sh "docker build -t gcr.io/sonic-cumulus-205009/${JOB_NAME}:$BUILD_NUMBER -f docker/Dockerfile ."
         }
     }
