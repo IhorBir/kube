@@ -22,7 +22,7 @@ node {
     stage('Build to container') {
         dir('spring-boot-samples/spring-boot-sample-actuator') {
             dir('docker') {
-                git "https://github.com/IhorBir/kube.git"
+                git changelog: false, poll: false, url: 'https://github.com/IhorBir/kube.git'
             }
             sh "docker build -t gcr.io/sonic-cumulus-205009/${JOB_NAME}:$BUILD_NUMBER -f docker/Dockerfile ."
         }
