@@ -1,4 +1,4 @@
-node {
+1node {
     
     stage('git clone') {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/spring-projects/spring-boot.git']]])
